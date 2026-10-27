@@ -1,0 +1,29 @@
+name: Run pytest
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest requests
+
+      - name: Run unit tests (lab 6)
+        run: pytest 6/ -v
+
+      - name: Run API tests (lab 5)
+        run: pytest 5/ -v
